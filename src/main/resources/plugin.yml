@@ -1,0 +1,10 @@
+name: NoHackClient
+version: ${project.version}
+main: dev.mruniverse.nohackclient.NoHackClient
+api-version: 1.16
+description: Simple Block System plugin
+commands:
+  nhackc:
+    description: Main command of the plugin
+  nohackclient:
+    description: Main command of the plugin

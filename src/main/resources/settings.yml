@@ -1,0 +1,62 @@
+#  _   _         _    _            _       _____ _ _            _
+# | \ | |       | |  | |          | |     / ____| (_)          | |
+# |  \| | ___   | |__| | __ _  ___| | __ | |    | |_  ___ _ __ | |_
+# | . ` |/ _ \  |  __  |/ _` |/ __| |/ / | |    | | |/ _ \ '_ \| __|
+# | |\  | (_) | | |  | | (_| | (__|   <  | |____| | |  __/ | | | |_
+# |_| \_|\___/  |_|  |_|\__,_|\___|_|\_\  \_____|_|_|\___|_| |_|\__|
+#
+# Created by: MrUniverse44
+# Version: 1.2.0-SNAPSHOT
+#
+# Plugin Settings
+# > - Mode: NORMAL # NORMAL,HARDCORE
+# In hardcore the plugin can give more percent of false positives, be careful.
+#
+#
+# Name Check:
+#   Add more checks with this example:
+#   caseExample:
+#     name: "example"
+#     id: "E1"
+#     numberLength: 3
+#     contains-text:
+#       - "E"
+#       - "F"
+#       - "P"
+#       - "_"
+settings:
+  mode: NORMAL
+  enable-by-default-alerts-on-join-for-staffs: true
+  alert-permission: "nohackclient.alerts"
+  checks:
+    name:
+      case1:
+        name: "case1"
+        id: "CB1"
+        numberLength: 3
+        contains-text:
+          - "F"
+          - "D"
+          - "P"
+          - "_"
+      case2:
+        name: "case2"
+        id: "CB2"
+        numberLength: 3
+        contains-text:
+          - "A"
+          - "F"
+          - "D"
+          - "_"
+    vpn-and-proxy:
+      min-fraud-score-to-sanction: 60
+      proxycheck:
+        toggle: true
+        key: "INSERT KEY HERE"
+        id: "VP01"
+        name: "Detection"
+      ipqualityscore:
+        toggle: true
+        key: "INSERT KEY HERE"
+        id: "VP02"
+        name: "Detection"

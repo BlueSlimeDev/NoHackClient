@@ -1,0 +1,174 @@
+#  _   _         _    _            _       _____ _ _            _
+# | \ | |       | |  | |          | |     / ____| (_)          | |
+# |  \| | ___   | |__| | __ _  ___| | __ | |    | |_  ___ _ __ | |_
+# | . ` |/ _ \  |  __  |/ _` |/ __| |/ / | |    | | |/ _ \ '_ \| __|
+# | |\  | (_) | | |  | | (_| | (__|   <  | |____| | |  __/ | | | |_
+# |_| \_|\___/  |_|  |_|\__,_|\___|_|\_\  \_____|_|_|\___|_| |_|\__|
+#
+# Created by: MrUniverse44
+# Version: 1.2.0-SNAPSHOT
+#
+# Plugin Messages
+messages:
+  # This is the prefix for all messages (excluding Kick-Messages and Alerts)
+  prefix: "&5&lNHC &8| "
+  command:
+    no-perms: "&cYou don't have permissions to do this!"
+    arguments: "&cInvalid Argument."
+    info:
+      - "&6<player> &f- &6<lastCheck_name>"
+      - "&fCode: &6<code>"
+      - "&fCode ID: &6<codeID>"
+      - " "
+      - "&fCheck ID: <lastCheck_id>"
+  whitelist:
+    add: "&a<type> &e<player> &ahas been&b Added &ato the whitelist."
+    remove: "&a<type> &e<player> &ahas been&b Removed &afrom whitelist."
+    already: "&a<type> &e<player> &ais already on Whitelist!"
+    not: "&a<type> &e<player> &ais not in whitelist!"
+  checks:
+    name:
+      type: KICK
+      send-alert-message: true
+      alert: "&6<player>&f has been kicked for &6Strange Information&f."
+      value:
+        - "&cYou are permanently banned from this server!"
+        - "&7Reason: &fSuspicious data from your account &7&oC0"
+        - "&7Code: &b&n<code>-<codeID>"
+        - " "
+        - "&7Nick: &f<nick>#<checkID>"
+        - ""
+        - "&7mc.LatinPlay.net"
+
+    vpn:
+      type: BAN
+      send-alert-message: true
+      alert: "&6<player>&f has been kicked for &6Strange Information&f."
+      value:
+        - "&cYou are permanently banned from this server!"
+        - "&7Reason: &fSuspicious data from your account &7&oV1"
+        - "&7Code: &b&n<code>-<codeID>"
+        - " "
+        - "&7Nick: &f<nick>#<checkID>"
+        - ""
+        - "&7mc.LatinPlay.net"
+    socks:
+      type: BAN
+      send-alert-message: true
+      alert: "&6<player>&f has been kicked for &6Strange Information&f."
+      value:
+        - "&cYou are permanently banned from this server!"
+        - "&7Reason: &fSuspicious data from your account &7&oS1C2"
+        - "&7Code: &b&n<code>-<codeID>"
+        - " "
+        - "&7Nick: &f<nick>#<checkID>"
+        - ""
+        - "&7mc.LatinPlay.net"
+    tor:
+      type: BAN
+      send-alert-message: true
+      alert: "&6<player>&f has been kicked for &6Strange Information&f."
+      value:
+        - "&cYou are permanently banned from this server!"
+        - "&7Reason: &fSuspicious data from your account &7&oTC3"
+        - "&7Code: &b&n<code>-<codeID>"
+        - " "
+        - "&7Nick: &f<nick>#<checkID>"
+        - ""
+        - "&7mc.LatinPlay.net"
+    shadowsocks:
+      type: BAN
+      send-alert-message: true
+      alert: "&6<player>&f has been kicked for &6Strange Information&f."
+      value:
+        - "&cYou are permanently banned from this server!"
+        - "&7Reason: &fSuspicious data from your account &7&oS2C4"
+        - "&7Code: &b&n<code>-<codeID>"
+        - " "
+        - "&7Nick: &f<nick>#<checkID>"
+        - ""
+        - "&7mc.LatinPlay.net"
+    http:
+      type: BAN
+      send-alert-message: true
+      alert: "&6<player>&f has been kicked for &6Strange Information&f."
+      value:
+        - "&cYou are permanently banned from this server!"
+        - "&7Reason: &fSuspicious data from your account &7&oHC5"
+        - "&7Code: &b&n<code>-<codeID>"
+        - " "
+        - "&7Nick: &f<nick>#<checkID>"
+        - ""
+        - "&7mc.LatinPlay.net"
+    https:
+      type: BAN
+      send-alert-message: true
+      alert: "&6<player>&f has been kicked for &6Strange Information&f."
+      value:
+        - "&cYou are permanently banned from this server!"
+        - "&7Reason: &fSuspicious data from your account &7&oHC6"
+        - "&7Code: &b&n<code>-<codeID>"
+        - " "
+        - "&7Nick: &f<nick>#<checkID>"
+        - ""
+        - "&7mc.LatinPlay.net"
+    compromised-server:
+      type: BAN
+      send-alert-message: true
+      alert: "&6<player>&f has been kicked for &6Strange Information&f."
+      value:
+        - "&cYou are permanently banned from this server!"
+        - "&7Reason: &fSuspicious data from your account &7&oC_SV_C7"
+        - "&7Code: &b&n<code>-<codeID>"
+        - " "
+        - "&7Nick: &f<nick>#<checkID>"
+        - ""
+        - "&7mc.LatinPlay.net"
+    inference-engine:
+      type: BAN
+      send-alert-message: true
+      alert: "&6<player>&f has been kicked for &6Strange Information&f."
+      value:
+        - "&cYou are permanently banned from this server!"
+        - "&7Reason: &fSuspicious data from your account &7&oPC8"
+        - "&7Code: &b&n<code>-<codeID>"
+        - " "
+        - "&7Nick: &f<nick>#<checkID>"
+        - ""
+        - "&7mc.LatinPlay.net"
+    open-vpn:
+      type: BAN
+      send-alert-message: true
+      alert: "&6<player>&f has been kicked for &6Strange Information&f."
+      value:
+        - "&cYou are permanently banned from this server!"
+        - "&7Reason: &fSuspicious data from your account &7&oV9"
+        - "&7Code: &b&n<code>-<codeID>"
+        - " "
+        - "&7Nick: &f<nick>#<checkID>"
+        - ""
+        - "&7mc.LatinPlay.net"
+    fraud-score:
+      type: BAN
+      send-alert-message: true
+      alert: "&6<player>&f has been kicked for &6Strange Information&f."
+      value:
+        - "&cYou are permanently banned from this server!"
+        - "&7Reason: &fSuspicious data from your account &7&oFS"
+        - "&7Code: &b&n<code>-<codeID>"
+        - " "
+        - "&7Nick: &f<nick>#<checkID>"
+        - ""
+        - "&7mc.LatinPlay.net"
+    pavlov-media:
+      type: BAN
+      send-alert-message: true
+      alert: "&6<player>&f has been kicked for &6Strange Information&f."
+      value:
+        - "&cYou are permanently banned from this server!"
+        - "&7Reason: &fSuspicious data from your account &7&oPMC11"
+        - "&7Code: &b&n<code>-<codeID>"
+        - " "
+        - "&7Nick: &f<nick>#<checkID>"
+        - ""
+        - "&7mc.LatinPlay.net"
