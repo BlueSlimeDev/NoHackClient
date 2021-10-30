@@ -133,6 +133,12 @@ public class SecurityController {
             executeBan(Alerts.FRAUD_SCORE,player,"CK2","C2FS1");
         } else {
             if(mode.equalsIgnoreCase("NORMAL") || mode.equalsIgnoreCase("DEFAULT")) return;
+            if(result.get("proxy").equalsIgnoreCase("true")) {
+                controller.sendAlert(Alerts.COMPROMISED_SERVER,name);
+                executeBan(Alerts.COMPROMISED_SERVER,player,"CK2","C2CS1");
+                return;
+            }
+            if(mode.equalsIgnoreCase("NORMAL_MEDIUM")) return;
             if(result.get("active_tor").equalsIgnoreCase("true")) {
                 controller.sendAlert(Alerts.TOR,name);
                 executeBan(Alerts.TOR,player,"CK2","C2T2");
@@ -143,14 +149,10 @@ public class SecurityController {
                 executeBan(Alerts.TOR,player,"CK2","C2T1");
                 return;
             }
+            if(mode.equalsIgnoreCase("MEDIUM")) return;
             if(result.get("active_vpn").equalsIgnoreCase("true")) {
                 controller.sendAlert(Alerts.VPN,name);
                 executeBan(Alerts.VPN,player,"CK2","C2V2");
-                return;
-            }
-            if(result.get("proxy").equalsIgnoreCase("true")) {
-                controller.sendAlert(Alerts.COMPROMISED_SERVER,name);
-                executeBan(Alerts.COMPROMISED_SERVER,player,"CK2","C2CS1");
                 return;
             }
             if(result.get("vpn").equalsIgnoreCase("true")) {

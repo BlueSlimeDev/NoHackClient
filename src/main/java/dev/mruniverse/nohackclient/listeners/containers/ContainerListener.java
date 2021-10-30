@@ -36,7 +36,7 @@ public class ContainerListener implements Listener {
         if(!configuration.getStringList("whitelist").contains(name) && !configuration.getStringList("users").contains(name)) {
             for (Sanction cases : containerController.getCases()) {
                 if (containerDetector.execute(cases, lastCheck, name)) {
-                    plugin.getLogs().info("&fUsuario &c" + name + "&f ha sido bloqueado.");
+                    plugin.getLogs().info("&fUser &c" + name + "&f has been blocked.");
                     plugin.getController().sendAlert(Alerts.NAME,name);
                     event.setKickMessage(ChatColor.translateAlternateColorCodes('&', plugin.getController().getKick(Alerts.NAME,name,cases.getName(),cases.getId())));
                     event.setResult(Result.KICK_BANNED);
@@ -57,11 +57,11 @@ public class ContainerListener implements Listener {
                     plugin.getController().sendAlert(Alerts.NAME, name);
                     try {
                         String[] caseString = plugin.getStorage().getControl(GuardianFiles.PLAYERS).getString("casesString." + name, "NAME,MMN1,C01").split(",");
-                        plugin.getLogs().info("&fUsuario &c" + name + "&f ha sido bloqueado.");
+                        plugin.getLogs().info("&fUser &c" + name + "&f has been blocked.");
                         event.setKickMessage(ChatColor.translateAlternateColorCodes('&', plugin.getController().getKick(Alerts.NAME, name, caseString[1], caseString[2])));
                         event.setResult(Result.KICK_BANNED);
                     } catch (Throwable ignored) {
-                        plugin.getLogs().info("&fUsuario &c" + name + "&f ha sido bloqueado.");
+                        plugin.getLogs().info("&fUser &c" + name + "&f has been blocked.");
                         event.setKickMessage(ChatColor.translateAlternateColorCodes('&', plugin.getController().getKick(Alerts.NAME, name, "MMN1", "C01")));
                         event.setResult(Result.KICK_BANNED);
                     }

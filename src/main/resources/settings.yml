@@ -9,8 +9,12 @@
 # Version: 1.2.0-SNAPSHOT
 #
 # Plugin Settings
-# > - Mode: NORMAL # NORMAL,HARDCORE
-# In hardcore the plugin can give more percent of false positives, be careful.
+# > - Mode: NORMAL
+# > #Modes: NORMAL, NORMAL_MEDIUM, MEDIUM, HIGH, HARDCORE
+# If the mode is MEDIUM,HIGH,HARDCORE the probability of false positives will be more high
+# NORMAL_MEDIUM can have more posibilities of false positives than NORMAL because have 1 more check
+# MEDIUM can have more positives than NORMAL_MEDIUM because have 2 more checks
+# HIGH,HARDCORE can have more positives than ALL modes because have 6 more checks than NORMAL
 #
 #
 # Name Check:

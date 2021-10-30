@@ -120,10 +120,10 @@ public class MainCommand implements CommandExecutor {
                     if(hasPermission(sender,"nohackclient.admin",true) || hasPermission(sender,"nohackclient.*",true)) {
                         if (args.length == 3) {
                             String user = args[1];
-                            if (plugin.getStorage().getControl(GuardianFiles.PLAYERS).getStringList("users").contains(user)) {
+                            if (plugin.getStorage().getControl(GuardianFiles.PLAYERS).getStringList("users").contains(user) || plugin.getStorage().getControl(GuardianFiles.PLAYERS).contains("casesString." + user)) {
                                 String[] caseString = plugin.getStorage().getControl(GuardianFiles.PLAYERS).getString("casesString." + user, "VPN,MMN1,C01").split(",");
                                 sendMessage(sender, "&a");
-                                sendMessage(sender, "&aInfo de &b" + user + "&a:");
+                                sendMessage(sender, "&aInfo of &b" + user + "&a:");
                                 sendMessage(sender, "&aReason: &f" + caseString[0]);
                                 sendMessage(sender, "&aDetect: &e" + caseString[1]);
                                 sendMessage(sender, "&aCode: &6" + caseString[2]);
