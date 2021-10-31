@@ -16,13 +16,18 @@ public class Controller {
 
     public void sendAlert(Alerts alert, String nick) {
         String alertMessage;
-        alertMessage = plugin.getStorage().getControl(GuardianFiles.MESSAGES).getString(alert.getPath() + "alert", "&6<player>&f has been kicked for &6Strange Nick&f.");
+        if(alert != Alerts.BLOCKED) {
+            alertMessage = plugin.getStorage().getControl(GuardianFiles.MESSAGES).getString(alert.getPath() + "alert", "&6<player>&f has been kicked for &6Strange Nick&f.");
+        } else {
+            alertMessage = plugin.getStorage().getControl(GuardianFiles.MESSAGES).getString(alert.getPath(), "&6<player>&f has been kicked because he is &6blocked&f.");
+        }
         alertMessage = ChatColor.translateAlternateColorCodes('&', alertMessage.replace("<player>", nick));
         for (Player player : plugin.getServer().getOnlinePlayers()) {
             if (player.hasPermission("nohackclient.alerts")) {
                 player.sendMessage(alertMessage);
             }
         }
+
     }
 
     public String getKick(Alerts alert, String nick, String caseName, String caseID) {

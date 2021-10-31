@@ -15,6 +15,11 @@ messages:
   command:
     no-perms: "&cYou don't have permissions to do this!"
     arguments: "&cInvalid Argument."
+    debug-format: "&a<check>: &6<result>"
+    debugs:
+      result: "Result"
+      no-result: "&bNo results found."
+      found: "&cFound. &7<code>"
     info:
       - "&6<player> &f- &6<lastCheck_name>"
       - "&fCode: &6<code>"
@@ -27,6 +32,7 @@ messages:
     already: "&a<type> &e<player> &ais already on Whitelist!"
     not: "&a<type> &e<player> &ais not in whitelist!"
   checks:
+    blocked: "&6<player>&f has been kicked because he is &6blocked&f."
     name:
       type: KICK
       send-alert-message: true

@@ -33,6 +33,7 @@ settings:
   enable-by-default-alerts-on-join-for-staffs: true
   alert-permission: "nohackclient.alerts"
   checks:
+    toggle-compromised-server-check: true
     name:
       case1:
         name: "case1"

@@ -54,7 +54,7 @@ public class MainCommand implements CommandExecutor {
         try {
             if (args.length == 0 || args[0].equalsIgnoreCase("help") && (hasPermission(sender,"nohackclient.usage",false) || hasPermission(sender,"nohackclient.*",false) || hasPermission(sender,"nohackclient.*",false))) {
                 sender.sendMessage(" ");
-                sendMessage(sender, "&e&lNoHackClient &f- &oEasy Anti FDP Hack Client");
+                sendMessage(sender, "&e&lNoHackClient &f- &oEasy Anti Hack Client");
                 sendMessage(sender,"&7&oCreated by MrUniverse44");
                 sendMessage(sender,cmdPrefix + " admin &e- &fAdmin commands");
                 sendMessage(sender, "&7Currently on beta phase");
@@ -64,10 +64,11 @@ public class MainCommand implements CommandExecutor {
                 if(args.length == 1 || args[1].equalsIgnoreCase("1")) {
                     if (hasPermission(sender, "nohackclient.admin", true)) {
                         sender.sendMessage(" ");
-                        sendMessage(sender, "&e&lNoHackClient &f- &oEasy Anti FDP Hack Client");
+                        sendMessage(sender, "&e&lNoHackClient &f- &oEasy Anti Hack Client");
                         sendMessage(sender, cmdPrefix + " admin whitelist add [player or uuid] &e- &fAdd player to whitelist.");
                         sendMessage(sender, cmdPrefix + " admin whitelist remove [player or uuid] &e- &fRemove player from whitelist.");
                         sendMessage(sender,cmdPrefix + " admin info [player] &e- &fInfo of a player in black-list");
+                        sendMessage(sender,cmdPrefix + " admin debug [player] &e- &fCheck manually a player");
                         sendMessage(sender,cmdPrefix + " admin users");
                         sendMessage(sender, cmdPrefix + " admin reload &e- &fReload the plugin.");
                         sendMessage(sender, "&7Currently on beta phase");
@@ -123,10 +124,10 @@ public class MainCommand implements CommandExecutor {
                             if (plugin.getStorage().getControl(GuardianFiles.PLAYERS).getStringList("users").contains(user) || plugin.getStorage().getControl(GuardianFiles.PLAYERS).contains("casesString." + user)) {
                                 String[] caseString = plugin.getStorage().getControl(GuardianFiles.PLAYERS).getString("casesString." + user, "VPN,MMN1,C01").split(",");
                                 sendMessage(sender, "&a");
-                                sendMessage(sender, "&aInfo of &b" + user + "&a:");
-                                sendMessage(sender, "&aReason: &f" + caseString[0]);
-                                sendMessage(sender, "&aDetect: &e" + caseString[1]);
-                                sendMessage(sender, "&aCode: &6" + caseString[2]);
+                                sendMessage(sender, "&aInformation of &8" + user + "&7:");
+                                sendMessage(sender, "&7Reason: &f" + caseString[0]);
+                                sendMessage(sender, "&7Detect: &e" + caseString[1]);
+                                sendMessage(sender, "&7Code: &6" + caseString[2]);
                                 sendMessage(sender, "&a");
                                 return true;
                             }

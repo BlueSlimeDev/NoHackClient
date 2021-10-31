@@ -65,6 +65,10 @@ public enum Alerts implements Alert {
         }
         public String getName() { return "FRAUD_SCORE"; }
     },
+    BLOCKED {
+        public String getPath() { return "messages.checks.blocked"; }
+        public String getName() { return "BLOCKED"; }
+    },
     PAVLOV_MEDIA {
         public String getPath() {
             return "messages.checks.pavlov-media.";
