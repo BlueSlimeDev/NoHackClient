@@ -74,21 +74,21 @@ public class SecurityController {
         }
     }
 
-    public void debug(String ip, String player,Player staff) {
+    public void debug(boolean all,String ip, String player,Player staff) {
         if(proxyKey.equalsIgnoreCase("INSERT KEY HERE") && proxyCheck || qualityKey.equalsIgnoreCase("INSERT KEY HERE") && qualityCheck) {
             plugin.getLogs().error("VPN/PROXY DETECTION KEY DON'T FOUND! PLEASE CHECK YOUR CONFIGURATION");
             return;
         }
         if(proxyCheck) {
-            new HttpDebugRequest(plugin, "get", "https://proxycheck.io/v2/" + ip + "?key=" + getKey(Keys.PROXYCHECK) + "&vpn=1",player,ip,staff);
+            new HttpDebugRequest(plugin, "get", "https://proxycheck.io/v2/" + ip + "?key=" + getKey(Keys.PROXYCHECK) + "&vpn=1",player,ip,staff,all);
         }
         if(qualityCheck) {
-            new HttpDebugRequest(plugin, "get", "https://www.ipqualityscore.com/api/json/ip/" + getKey(Keys.IPQUALITYSCORE) + "/" + ip,player,ip,staff);
+            new HttpDebugRequest(plugin, "get", "https://www.ipqualityscore.com/api/json/ip/" + getKey(Keys.IPQUALITYSCORE) + "/" + ip,player,ip,staff,all);
         }
     }
 
 
-    public void checkResult(String ip,Keys key, String name,Player staff, HashMap<String,String> result) {
+    public void checkResult(String ip,Keys key,boolean debugAll, String name,Player staff, HashMap<String,String> result) {
         String format = ChatColor.translateAlternateColorCodes('&', plugin.getStorage().getControl(GuardianFiles.MESSAGES).getString("messages.command.debug-format","&a<check>: &6<result>"));
         String results = ChatColor.translateAlternateColorCodes('&', plugin.getStorage().getControl(GuardianFiles.MESSAGES).getString("messages.command.debugs.result","Result"));
         String none = ChatColor.translateAlternateColorCodes('&', plugin.getStorage().getControl(GuardianFiles.MESSAGES).getString("messages.command.debugs.no-result","&bNo results found."));
@@ -168,7 +168,7 @@ public class SecurityController {
                 .replace("<check>","Fraud Score")
                 .replace("<result>",fraud + " (Max: " + fraudScore + ")")
         );
-        if(mode.equalsIgnoreCase("NORMAL") || mode.equalsIgnoreCase("DEFAULT")) return;
+        if(!debugAll) return;
         sendMessage(staff,"&6IpQualityScore:");
         if(result.get("proxy").equalsIgnoreCase("true")) {
             sendMessage(staff,format
@@ -183,7 +183,6 @@ public class SecurityController {
                     .replace("<code>","")
             );
         }
-        if(mode.equalsIgnoreCase("NORMAL_MEDIUM")) return;
         if(result.get("active_tor").equalsIgnoreCase("true")) {
             sendMessage(staff,format
                     .replace("<check>","Active TOR")
@@ -210,7 +209,6 @@ public class SecurityController {
                     .replace("<code>","")
             );
         }
-        if(mode.equalsIgnoreCase("MEDIUM")) return;
         if(result.get("active_vpn").equalsIgnoreCase("true")) {
             sendMessage(staff,format
                     .replace("<check>","ActiveVPN")

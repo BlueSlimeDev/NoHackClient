@@ -71,6 +71,7 @@ public class MainCommand implements CommandExecutor {
                         sendMessage(sender, cmdPrefix + " admin whitelist remove [player or uuid] &e- &fRemove player from whitelist.");
                         sendMessage(sender,cmdPrefix + " admin info [player] &e- &fInfo of a player in black-list");
                         sendMessage(sender,cmdPrefix + " admin debug [player] &e- &fCheck manually a player");
+                        sendMessage(sender,cmdPrefix + " admin debugAll [player] &e- &fCheck manually a player");
                         sendMessage(sender,cmdPrefix + " admin users");
                         sendMessage(sender, cmdPrefix + " admin reload &e- &fReload the plugin.");
                         sendMessage(sender, "&7Currently on beta phase");
@@ -100,7 +101,41 @@ public class MainCommand implements CommandExecutor {
                                     MainCommand.sendMessage(sender, "&cCan't find the player");
                                     return true;
                                 }
-                                plugin.getSecurity().debug(ip, user, (Player) sender);
+                                plugin.getSecurity().debug(false,ip, user, (Player) sender);
+                                return true;
+                            }
+                            MainCommand.sendMessage(sender, "&cCan't find the player");
+                            return true;
+                        }
+                        MainCommand.sendMessage(sender, "&cYou have enought arguments or...");
+                        MainCommand.sendMessage(sender, "&cThis command is being executed by console, this command is only for players.");
+                        return true;
+                    }
+                }
+
+                if (args[1].equalsIgnoreCase("debugAll")) {
+                    if(hasPermission(sender,"nohackclient.admin",true) || hasPermission(sender,"nohackclient.*",true)) {
+                        if (args.length == 3 && sender instanceof Player) {
+                            String user = args[2];
+                            Player player = plugin.getServer().getPlayer(user);
+                            if (player != null || plugin.getStorage().getControl(GuardianFiles.PLAYERS).contains("ips." + user)) {
+                                String ip;
+                                if (player == null) {
+                                    ip = plugin.getStorage().getControl(GuardianFiles.PLAYERS).getString("ips." + user, "none");
+                                } else {
+                                    InetSocketAddress socket = player.getAddress();
+                                    if (socket != null) {
+                                        InetAddress address = socket.getAddress();
+                                        ip = address.getHostAddress();
+                                    } else {
+                                        ip = "none";
+                                    }
+                                }
+                                if (ip.equalsIgnoreCase("none")) {
+                                    MainCommand.sendMessage(sender, "&cCan't find the player");
+                                    return true;
+                                }
+                                plugin.getSecurity().debug(true,ip, user, (Player) sender);
                                 return true;
                             }
                             MainCommand.sendMessage(sender, "&cCan't find the player");

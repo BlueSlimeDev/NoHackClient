@@ -44,15 +44,18 @@ public class HttpDebugRequest {
 
     private final String player;
 
+    private boolean debugAll;
+
     private SecurityController.Keys key = SecurityController.Keys.PROXYCHECK;
 
-    public HttpDebugRequest(NoHackClient plugin, String method, String url, String player,String ip,Player staff) {
+    public HttpDebugRequest(NoHackClient plugin, String method, String url, String player,String ip,Player staff,boolean debugAll) {
         this.method = method;
         this.url = url;
         List<String> headers = new ArrayList<>();
         String body = "";
         this.plugin = plugin;
         this.player = player;
+        this.debugAll = debugAll;
         this.staff = staff;
         this.ip = ip;
         if(url.contains("ipqualityscore")) {
@@ -76,7 +79,7 @@ public class HttpDebugRequest {
                         lastResponse = resp;
                         HttpUtils utils = new HttpUtils(plugin.getLogs(),resp.getBody());
                         if(staff != null) {
-                            plugin.getSecurity().checkResult(ip, key, player,staff, utils.getMap());
+                            plugin.getSecurity().checkResult(ip, key,debugAll, player,staff, utils.getMap());
                         }
                     });
 
