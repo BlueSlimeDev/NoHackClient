@@ -7,10 +7,6 @@ import dev.mruniverse.nohackclient.storage.FileSaveMode;
 import dev.mruniverse.nohackclient.storage.GuardianFiles;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
-
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.util.List;
 
 public class WhitelistCommand {
@@ -48,37 +44,6 @@ public class WhitelistCommand {
                 return;
             }
             argumentsIssue(sender);
-            return;
-        }
-        if (arguments[0].equalsIgnoreCase("debug")) {
-            if (arguments.length == 2 && sender instanceof Player) {
-                String user = arguments[1];
-                Player player = plugin.getServer().getPlayer(user);
-                if(player != null || plugin.getStorage().getControl(GuardianFiles.PLAYERS).contains("ips." + user)) {
-                    String ip;
-                    if(player == null) {
-                        ip = plugin.getStorage().getControl(GuardianFiles.PLAYERS).getString("ips." + user,"none");
-                    } else {
-                        InetSocketAddress socket = player.getAddress();
-                        if (socket != null) {
-                            InetAddress address = socket.getAddress();
-                            ip = address.getHostAddress();
-                        } else {
-                            ip = "none";
-                        }
-                    }
-                    if(ip.equalsIgnoreCase("none")) {
-                        MainCommand.sendMessage(sender,"&cCan't find the player");
-                        return;
-                    }
-                    plugin.getSecurity().debug(ip,user,(Player)sender);
-                    return;
-                }
-                MainCommand.sendMessage(sender,"&cCan't find the player");
-                return;
-            }
-            argumentsIssue(sender);
-            MainCommand.sendMessage(sender,"&cOr this command is being executed by console, this command is only for players.");
             return;
         }
         if (arguments[0].equalsIgnoreCase("remove")) {
