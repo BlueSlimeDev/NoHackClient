@@ -93,69 +93,75 @@ public class SecurityController {
         String results = ChatColor.translateAlternateColorCodes('&', plugin.getStorage().getControl(GuardianFiles.MESSAGES).getString("messages.command.debugs.result","Result"));
         String none = ChatColor.translateAlternateColorCodes('&', plugin.getStorage().getControl(GuardianFiles.MESSAGES).getString("messages.command.debugs.no-result","&bNo results found."));
         String found = ChatColor.translateAlternateColorCodes('&', plugin.getStorage().getControl(GuardianFiles.MESSAGES).getString("messages.command.debugs.found","&cFound"));
+        String requestLimit = ChatColor.translateAlternateColorCodes('&', plugin.getStorage().getControl(GuardianFiles.MESSAGES).getString("messages.command.debugs.request-limit","&eYou have exceeded your request quota of 200 per day. Please upgrade to increase your request quota."));
+        String requestError = ChatColor.translateAlternateColorCodes('&', plugin.getStorage().getControl(GuardianFiles.MESSAGES).getString("messages.command.debugs.request-error","&eRequest Issue, check console to see information."));
         if(key == Keys.PROXYCHECK) {
-            String toConvert = result.get(ip);
-            try {
-                JSONObject object = (JSONObject) new JSONParser().parse(toConvert);
-                sendMessage(staff,"&dResults of " + name);
-                String proxy = object.get("proxy").toString();
-                if(proxy.equalsIgnoreCase("yes")) {
-                    sendMessage(staff,"&6ProxyCheck:");
-                    String type = object.get("type").toString();
-                    String foundIssue = format
-                            .replace("<check>", results)
-                            .replace("<result>", found);
-                    if(type.equalsIgnoreCase("VPN")) {
-                        sendMessage(staff, foundIssue
-                                .replace("<code>","CK1-C1V1")
+            if(result.get("status").equalsIgnoreCase("ok")) {
+                String toConvert = result.get(ip);
+                try {
+                    JSONObject object = (JSONObject) new JSONParser().parse(toConvert);
+                    sendMessage(staff, "&dResults of " + name);
+                    String proxy = object.get("proxy").toString();
+                    if (proxy.equalsIgnoreCase("yes")) {
+                        sendMessage(staff, "&6ProxyCheck:");
+                        String type = object.get("type").toString();
+                        String foundIssue = format
+                                .replace("<check>", results)
+                                .replace("<result>", found);
+                        if (type.equalsIgnoreCase("VPN")) {
+                            sendMessage(staff, foundIssue
+                                    .replace("<code>", "CK1-C1V1")
+                            );
+                        }
+                        if (type.equalsIgnoreCase("TOR")) {
+                            sendMessage(staff, foundIssue
+                                    .replace("<code>", "CK1-C1T1")
+                            );
+                        }
+                        if (type.equalsIgnoreCase("Shadowsocks")) {
+                            sendMessage(staff, foundIssue
+                                    .replace("<code>", "CK1-C1SS1")
+                            );
+                        }
+                        if (type.equalsIgnoreCase("HTTP")) {
+                            sendMessage(staff, foundIssue
+                                    .replace("<code>", "CK1-C1H1")
+                            );
+                        }
+                        if (type.equalsIgnoreCase("HTTPS")) {
+                            sendMessage(staff, foundIssue
+                                    .replace("<code>", "CK1-C1H2")
+                            );
+                        }
+                        if (type.equalsIgnoreCase("Compromised Server")) {
+                            sendMessage(staff, foundIssue
+                                    .replace("<code>", "CK1-C1CS1")
+                            );
+                        }
+                        if (type.equalsIgnoreCase("Inference Engine")) {
+                            sendMessage(staff, foundIssue
+                                    .replace("<code>", "CK1-C1IE1")
+                            );
+                        }
+                        if (type.equalsIgnoreCase("OpenVPN")) {
+                            sendMessage(staff, foundIssue
+                                    .replace("<code>", "CK1-C1OV1")
+                            );
+                        }
+                    } else {
+                        sendMessage(staff, "&6ProxyCheck:");
+                        sendMessage(staff, format
+                                .replace("<check>", results)
+                                .replace("<result>", none)
+                                .replace("<code>", "")
                         );
                     }
-                    if(type.equalsIgnoreCase("TOR")) {
-                        sendMessage(staff, foundIssue
-                                .replace("<code>","CK1-C1T1")
-                        );
-                    }
-                    if(type.equalsIgnoreCase("Shadowsocks")) {
-                        sendMessage(staff, foundIssue
-                                .replace("<code>","CK1-C1SS1")
-                        );
-                    }
-                    if(type.equalsIgnoreCase("HTTP")) {
-                        sendMessage(staff, foundIssue
-                                .replace("<code>","CK1-C1H1")
-                        );
-                    }
-                    if(type.equalsIgnoreCase("HTTPS")) {
-                        sendMessage(staff, foundIssue
-                                .replace("<code>","CK1-C1H2")
-                        );
-                    }
-                    if(type.equalsIgnoreCase("Compromised Server")) {
-                        sendMessage(staff, foundIssue
-                                .replace("<code>","CK1-C1CS1")
-                        );
-                    }
-                    if(type.equalsIgnoreCase("Inference Engine")) {
-                        sendMessage(staff, foundIssue
-                                .replace("<code>","CK1-C1IE1")
-                        );
-                    }
-                    if(type.equalsIgnoreCase("OpenVPN")) {
-                        sendMessage(staff, foundIssue
-                                .replace("<code>","CK1-C1OV1")
-                        );
-                    }
-                } else {
-                    sendMessage(staff,"&6ProxyCheck:");
-                    sendMessage(staff,format
-                            .replace("<check>",results)
-                            .replace("<result>",none)
-                            .replace("<code>","")
-                    );
+                } catch (Throwable throwable) {
+                    plugin.getLogs().error(throwable);
                 }
-            }catch(Throwable throwable) {
-                plugin.getLogs().error(throwable);
+                return;
             }
+            sendMessage(staff,requestError);
             return;
         }
         int fraud;
@@ -170,6 +176,10 @@ public class SecurityController {
         );
         if(!debugAll) return;
         sendMessage(staff,"&6IpQualityScore:");
+        if(result.get("success").equalsIgnoreCase("false")) {
+            sendMessage(staff,requestLimit);
+            return;
+        }
         if(result.get("proxy").equalsIgnoreCase("true")) {
             sendMessage(staff,format
                     .replace("<check>","Proxy")
@@ -241,59 +251,65 @@ public class SecurityController {
     public void result(String ip,Keys key, Player player, HashMap<String,String> result) {
         String name = player.getName();
         Controller controller = plugin.getController();
+        String requestLimit = ChatColor.translateAlternateColorCodes('&', plugin.getStorage().getControl(GuardianFiles.MESSAGES).getString("messages.command.debugs.request-limit","&eYou have exceeded your request quota of 200 per day. Please upgrade to increase your request quota."));
+        String requestError = ChatColor.translateAlternateColorCodes('&', plugin.getStorage().getControl(GuardianFiles.MESSAGES).getString("messages.command.debugs.request-error","&eRequest Issue, check console to see information."));
         if(key == Keys.PROXYCHECK) {
-            String toConvert = result.get(ip);
-            try {
-                JSONObject object = (JSONObject) new JSONParser().parse(toConvert);
-                String proxy = object.get("proxy").toString();
-                if(proxy.equalsIgnoreCase("yes")) {
-                    String type = object.get("type").toString();
-                    if(type.equalsIgnoreCase("VPN")) {
-                        controller.sendAlert(Alerts.VPN,name);
-                        executeBan(Alerts.VPN,player,"CK1","C1V1");
-                        return;
-                    }
-                    if(type.equalsIgnoreCase("TOR")) {
-                        controller.sendAlert(Alerts.TOR,name);
-                        executeBan(Alerts.TOR,player,"CK1","C1T1");
-                        return;
-                    }
-                    if(type.equalsIgnoreCase("Shadowsocks")) {
-                        controller.sendAlert(Alerts.SHADOW_SOCKS,name);
-                        executeBan(Alerts.SHADOW_SOCKS,player,"CK1","C1SS1");
-                        return;
-                    }
-                    if(type.equalsIgnoreCase("HTTP")) {
-                        controller.sendAlert(Alerts.HTTP,name);
-                        executeBan(Alerts.HTTP,player,"CK1","C1H1");
-                        return;
-                    }
-                    if(type.equalsIgnoreCase("HTTPS")) {
-                        controller.sendAlert(Alerts.HTTPS,name);
-                        executeBan(Alerts.HTTPS,player,"CK1","C1H2");
-                        return;
-                    }
-                    if(compromised) {
-                        if (type.equalsIgnoreCase("Compromised Server")) {
-                            controller.sendAlert(Alerts.COMPROMISED_SERVER, name);
-                            executeBan(Alerts.COMPROMISED_SERVER, player, "CK1", "C1CS1");
+            if(result.get("status").equalsIgnoreCase("ok")) {
+                String toConvert = result.get(ip);
+                try {
+                    JSONObject object = (JSONObject) new JSONParser().parse(toConvert);
+                    String proxy = object.get("proxy").toString();
+                    if (proxy.equalsIgnoreCase("yes")) {
+                        String type = object.get("type").toString();
+                        if (type.equalsIgnoreCase("VPN")) {
+                            controller.sendAlert(Alerts.VPN, name);
+                            executeBan(Alerts.VPN, player, "CK1", "C1V1");
+                            return;
+                        }
+                        if (type.equalsIgnoreCase("TOR")) {
+                            controller.sendAlert(Alerts.TOR, name);
+                            executeBan(Alerts.TOR, player, "CK1", "C1T1");
+                            return;
+                        }
+                        if (type.equalsIgnoreCase("Shadowsocks")) {
+                            controller.sendAlert(Alerts.SHADOW_SOCKS, name);
+                            executeBan(Alerts.SHADOW_SOCKS, player, "CK1", "C1SS1");
+                            return;
+                        }
+                        if (type.equalsIgnoreCase("HTTP")) {
+                            controller.sendAlert(Alerts.HTTP, name);
+                            executeBan(Alerts.HTTP, player, "CK1", "C1H1");
+                            return;
+                        }
+                        if (type.equalsIgnoreCase("HTTPS")) {
+                            controller.sendAlert(Alerts.HTTPS, name);
+                            executeBan(Alerts.HTTPS, player, "CK1", "C1H2");
+                            return;
+                        }
+                        if (compromised) {
+                            if (type.equalsIgnoreCase("Compromised Server")) {
+                                controller.sendAlert(Alerts.COMPROMISED_SERVER, name);
+                                executeBan(Alerts.COMPROMISED_SERVER, player, "CK1", "C1CS1");
+                                return;
+                            }
+                        }
+                        if (type.equalsIgnoreCase("Inference Engine")) {
+                            controller.sendAlert(Alerts.INFERENCE_ENGINE, name);
+                            executeBan(Alerts.INFERENCE_ENGINE, player, "CK1", "C1IE1");
+                            return;
+                        }
+                        if (type.equalsIgnoreCase("OpenVPN")) {
+                            controller.sendAlert(Alerts.OPEN_VPN, name);
+                            executeBan(Alerts.OPEN_VPN, player, "CK1", "C1OV1");
                             return;
                         }
                     }
-                    if(type.equalsIgnoreCase("Inference Engine")) {
-                        controller.sendAlert(Alerts.INFERENCE_ENGINE,name);
-                        executeBan(Alerts.INFERENCE_ENGINE,player,"CK1","C1IE1");
-                        return;
-                    }
-                    if(type.equalsIgnoreCase("OpenVPN")) {
-                        controller.sendAlert(Alerts.OPEN_VPN,name);
-                        executeBan(Alerts.OPEN_VPN,player,"CK1","C1OV1");
-                        return;
-                    }
+                } catch (Throwable throwable) {
+                    plugin.getLogs().error(throwable);
                 }
-            }catch(Throwable throwable) {
-                plugin.getLogs().error(throwable);
+                return;
             }
+            plugin.getLogs().error("&6PROXYCHECK: &f" + requestError);
             return;
         }
         int fraud;
@@ -310,6 +326,10 @@ public class SecurityController {
             executeBan(Alerts.FRAUD_SCORE,player,"CK2","C2FS1");
         } else {
             if(mode.equalsIgnoreCase("NORMAL") || mode.equalsIgnoreCase("DEFAULT")) return;
+            if(result.get("success").equalsIgnoreCase("false")) {
+                plugin.getLogs().info("&6IPQUALITYSCORE: &f" + requestLimit);
+                return;
+            }
             if(result.get("proxy").equalsIgnoreCase("true")) {
                 controller.sendAlert(Alerts.COMPROMISED_SERVER,name);
                 executeBan(Alerts.COMPROMISED_SERVER,player,"CK2","C2CS1");

@@ -20,6 +20,8 @@ messages:
       result: "Result"
       no-result: "&bNo results found."
       found: "&cFound. &7<code>"
+      request-limit: "&eYou have exceeded your request quota of 200 per day. Please upgrade to increase your request quota."
+      request-error: "&eRequest Issue, check console to see information."
     info:
       - "&6<player> &f- &6<lastCheck_name>"
       - "&fCode: &6<code>"
